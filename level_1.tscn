@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://dqx4hc1rcum2d"]
+[gd_scene load_steps=13 format=4 uid="uid://dqx4hc1rcum2d"]
 
 [ext_resource type="Texture2D" uid="uid://2w74kamy7xx4" path="res://plains.png" id="1_crmpd"]
 [ext_resource type="Texture2D" uid="uid://cahbcvpnkw45j" path="res://grass.png" id="2_4ecwe"]
@@ -602,7 +602,11 @@ sources/1 = SubResource("TileSetAtlasSource_qumlv")
 sources/2 = SubResource("TileSetAtlasSource_81ges")
 sources/3 = SubResource("TileSetAtlasSource_jb8ve")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p11ai"]
+size = Vector2(551, 160)
+
 [node name="Level1" type="Node2D"]
+texture_filter = 1
 
 [node name="Dirt" type="TileMapLayer" parent="."]
 z_index = -2
@@ -626,8 +630,18 @@ tile_set = SubResource("TileSet_5wksk")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_73vn8")
-autoplay = true
 
 [node name="PlayerGuy" parent="." instance=ExtResource("4_iy3ef")]
+position = Vector2(190, 185)
+scale = Vector2(0.5, 0.5)
 
-[node name="SubViewport" type="SubViewport" parent="PlayerGuy"]
+[node name="Camera2D" type="Camera2D" parent="PlayerGuy"]
+zoom = Vector2(3, 3)
+limit_left = 0
+limit_top = 0
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(265.5, 70)
+shape = SubResource("RectangleShape2D_p11ai")
