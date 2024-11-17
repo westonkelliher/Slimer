@@ -634,6 +634,7 @@ autoplay = true
 position = Vector2(58, 56)
 
 [node name="PlayerCam" type="Camera2D" parent="PlayerGuy"]
+
 zoom = Vector2(3, 3)
 limit_left = 0
 limit_top = 0
