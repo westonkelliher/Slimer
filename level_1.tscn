@@ -2,10 +2,10 @@
 
 [ext_resource type="Texture2D" uid="uid://2w74kamy7xx4" path="res://plains.png" id="1_crmpd"]
 [ext_resource type="Texture2D" uid="uid://cahbcvpnkw45j" path="res://grass.png" id="2_4ecwe"]
-[ext_resource type="AudioStream" uid="uid://cs0pgku3h15nq" path="res://audio/BackBeat.wav" id="3_73vn8"]
+[ext_resource type="AudioStream" uid="uid://1l5u5w1wqaoj" path="res://audio/BackBeat.wav" id="3_73vn8"]
 [ext_resource type="Texture2D" uid="uid://cp5yv24bbwiu3" path="res://decor_8x8.png" id="3_adn2w"]
-[ext_resource type="Texture2D" uid="uid://c1yvwi63aj0jc" path="res://water.png" id="4_4eiq2"]
-[ext_resource type="PackedScene" uid="uid://bsdn71twxuejb" path="res://player_guy.tscn" id="4_iy3ef"]
+[ext_resource type="Texture2D" uid="uid://b8c06ypmh6hip" path="res://water.png" id="4_4eiq2"]
+[ext_resource type="PackedScene" uid="uid://bx7t484rlusaw" path="res://player_guy.tscn" id="4_iy3ef"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_385px"]
 texture = ExtResource("1_crmpd")
