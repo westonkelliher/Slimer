@@ -5,6 +5,8 @@ extends CharacterBody2D
 @export var SPRITE_SCALE := 1.0
 @export var DASH_MULT := 1.5
 
+var speed := SPEED
+
 var move_velocity := Vector2.ZERO
 var attack_velocity := Vector2.ZERO 
 
@@ -18,6 +20,7 @@ var is_attacking := false
 var move_disabled := false
 
 func _physics_process(delta: float) -> void:
+	handle_slow_timer()
 	if is_attacking:
 		if !move_disabled:
 			handle_attack_movement(delta)
@@ -27,6 +30,12 @@ func _physics_process(delta: float) -> void:
 	#TODO: 
 	apply_forces(delta)
 
+func handle_slow_timer() -> void:
+	if $AtkSlowingTimer.time_left > 0.0:
+		var p: float = $AtkSlowingTimer.time_left / $AtkSlowingTimer.wait_time
+		speed = SPEED * (1 - 0.5*p)
+	else:
+		speed = SPEED
 
 func apply_forces(delta: float) -> void:
 	velocity = move_velocity + attack_velocity
@@ -180,3 +189,4 @@ func _on_sprite_animation_finished() -> void:
 		is_attacking = false
 		move_disabled = false
 		attack_velocity = Vector2.ZERO
+		$AtkSlowingTimer.start()
