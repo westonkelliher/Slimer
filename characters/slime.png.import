@@ -2,7 +2,11 @@
 
 importer="texture"
 type="CompressedTexture2D"
+<<<<<<< HEAD
 uid="uid://c6dy4eva8wjav"
+=======
+uid="uid://c6vuebpbywe3u"
+>>>>>>> d412dcc (attacks)
 path="res://.godot/imported/slime.png-0532a0198072479b95663de2dbd05f6b.ctex"
 metadata={
 "vram_texture": false

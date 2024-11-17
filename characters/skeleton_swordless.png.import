@@ -2,7 +2,11 @@
 
 importer="texture"
 type="CompressedTexture2D"
+<<<<<<< HEAD
 uid="uid://bc62ray45u3gm"
+=======
+uid="uid://ccn1gkqj1p8ui"
+>>>>>>> d412dcc (attacks)
 path="res://.godot/imported/skeleton_swordless.png-45d0182d9b6d92ff0d46caa65cf59080.ctex"
 metadata={
 "vram_texture": false
