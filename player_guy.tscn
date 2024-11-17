@@ -852,6 +852,7 @@ script = ExtResource("1_k33vy")
 texture_filter = 1
 position = Vector2(0, -12)
 sprite_frames = SubResource("SpriteFrames_aoers")
+animation = &"resting_up"
 
 [node name="Shape" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_7bkkj")

@@ -632,7 +632,6 @@ tile_set = SubResource("TileSet_5wksk")
 stream = ExtResource("3_73vn8")
 
 [node name="PlayerGuy" parent="." instance=ExtResource("4_iy3ef")]
-
 position = Vector2(190, 185)
 
 [node name="Camera2D" type="Camera2D" parent="PlayerGuy"]

@@ -3,6 +3,7 @@ extends CharacterBody2D
 @export var SPEED := 100.0
 @export var ACC := 700.0
 @export var SPRITE_SCALE := 1.0
+@export var DASH_MULT := 0.5
 
 var move_velocity := Vector2.ZERO
 var attack_velocity := Vector2.ZERO 
@@ -16,14 +17,36 @@ var state := State.Still
 var is_attacking := false
 
 func _physics_process(delta: float) -> void:
-	check_for_attack_start()
-	handle_movement(delta)
-	#TODO: handle_attack_movement()
+	if is_attacking:
+		handle_attack_movement(delta)
+	else:
+		handle_movement(delta)
+		check_for_attack_start()
+	#TODO: 
 	apply_forces(delta)
 
+
 func apply_forces(delta: float) -> void:
-	velocity = move_velocity
+	velocity = move_velocity + attack_velocity
 	move_and_slide()
+
+func handle_movement(delta: float) -> void:
+	var move_vec := get_move_vector()
+	var current_dir := velocity.normalized()
+	var acc := ACC
+	var speed := SPEED
+	#if is_attacking:
+		#acc *= 0.5
+		#speed *= 2.0
+	move_velocity = move_velocity.move_toward(move_vec*speed, acc*delta)
+	choose_animation(move_vec)
+
+func handle_attack_movement(delta: float) -> void:
+	var move_vec := get_move_vector()
+	var current_dir := velocity.normalized()
+	var acc := ACC*0.25
+	var speed := SPEED*0.9
+	move_velocity = move_velocity.move_toward(move_vec*speed, acc*delta)
 
 func check_for_attack_start() -> void:
 	var atk_dir := get_attack_direction()
@@ -39,22 +62,24 @@ func check_for_attack_start() -> void:
 				$Sprite.play("slashing_side")
 			AtkDir.UpLeft:
 				$Sprite.play("jab_up")
+				attack_velocity = Vector2(-1.0, -1.0)*SPEED*DASH_MULT
 			AtkDir.UpRight:
 				$Sprite.play("jab_up")
+				attack_velocity = Vector2(1.0, -1.0)*SPEED*DASH_MULT
 			AtkDir.DownLeft:
 				$Sprite.play("jab_down")
+				attack_velocity = Vector2(-1.0, 1.0)*SPEED*DASH_MULT
 			AtkDir.DownRight:
 				$Sprite.play("jab_down")
+				attack_velocity = Vector2(1.0, 1.0)*SPEED*DASH_MULT
 		#
 		if is_atk_dir_left(atk_dir):
 			$Sprite.scale.x = -SPRITE_SCALE
 		else:
 			$Sprite.scale.x = SPRITE_SCALE
 		#
-		if is_atk_dir_diagonal(atk_dir):
-			move_velocity *= 1.5
-		else:
-			move_velocity *= 0.25
+		if !is_atk_dir_diagonal(atk_dir):
+			move_velocity *= 0.6
 		#
 		is_attacking = true
 
@@ -90,7 +115,7 @@ func get_attack_direction() -> AtkDir:
 			
 
 func move_dir_to_attack_dir() -> AtkDir:
-	match get:
+	match dir:
 		Dir.Up:
 			return AtkDir.Up
 		Dir.Down:
@@ -115,37 +140,26 @@ func get_move_vector() -> Vector2:
 	return move_dir.normalized()
 	
 
-func handle_movement(delta: float) -> void:
-	var move_vec := get_move_vector()
-	var current_dir := velocity.normalized()
-	var acc := ACC
-	var speed := SPEED
-	#if is_attacking:
-		#acc *= 0.5
-		#speed *= 2.0
-	move_velocity = move_velocity.move_toward(move_vec*speed, acc*delta)
-	choose_animation(move_vec)
-
 func choose_animation(direction: Vector2) -> void:
 	if is_attacking:
 		return
 	#
-	if direction.x > 0:
+	if direction.x > 0.:
 		dir = Dir.Right
 		$Sprite.play("walking_side")
-	elif direction.x < 0:
+	elif direction.x < 0.:
 		dir = Dir.Left
 		$Sprite.play("walking_side")
-	elif direction.y > 0:
+	elif direction.y > 0.:
 		dir = Dir.Down
 		$Sprite.play("walking_down")
-	elif direction.y < 0:
+	elif direction.y < 0.:
 		dir = Dir.Up
 		$Sprite.play("walking_up")
 	else:
 		if dir == Dir.Up:
 			$Sprite.play("resting_up")
-		if dir == Dir.Down:
+		elif dir == Dir.Down:
 			$Sprite.play("resting_down")
 		else:
 			$Sprite.play("resting_side")
@@ -159,3 +173,4 @@ func choose_animation(direction: Vector2) -> void:
 func _on_sprite_animation_finished() -> void:
 	if is_attacking:
 		is_attacking = false
+		attack_velocity = Vector2.ZERO
