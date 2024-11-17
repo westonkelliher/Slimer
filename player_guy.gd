@@ -1,8 +1,8 @@
 extends CharacterBody2D
 
-@export var SPEED := 200.0
-@export var ACC := 1300.0
-@export var SPRITE_SCALE := 2.0
+@export var SPEED := 100.0
+@export var ACC := 700.0
+@export var SPRITE_SCALE := 1.0
 
 var move_velocity := Vector2.ZERO
 var attack_velocity := Vector2.ZERO 

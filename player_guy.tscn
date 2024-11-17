@@ -1,8 +1,8 @@
-[gd_scene load_steps=116 format=3 uid="uid://bsdn71twxuejb"]
+[gd_scene load_steps=116 format=3 uid="uid://bx7t484rlusaw"]
 
 [ext_resource type="Script" path="res://player_guy.gd" id="1_k33vy"]
 [ext_resource type="Texture2D" uid="uid://cb52qpnyq2f54" path="res://characters/player.png" id="2_l7c4m"]
-[ext_resource type="Texture2D" uid="uid://6rpfelsq73fm" path="res://characters/player_alt.png" id="3_e6muj"]
+[ext_resource type="Texture2D" uid="uid://bfrq42r7cs8xb" path="res://characters/player_alt.png" id="3_e6muj"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7xs3s"]
 atlas = ExtResource("2_l7c4m")
@@ -843,17 +843,15 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7bkkj"]
-radius = 20.0
+radius = 7.07107
 
 [node name="PlayerGuy" type="CharacterBody2D"]
 script = ExtResource("1_k33vy")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-position = Vector2(0, -40)
-scale = Vector2(2, 2)
+position = Vector2(0, -12)
 sprite_frames = SubResource("SpriteFrames_aoers")
-animation = &"jab_down"
 
 [node name="Shape" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_7bkkj")
