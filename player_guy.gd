@@ -22,7 +22,8 @@ func _physics_process(delta: float) -> void:
 	apply_forces(delta)
 
 func apply_forces(delta: float) -> void:
-	position += move_velocity*delta
+	velocity = move_velocity
+	move_and_slide()
 
 func check_for_attack_start() -> void:
 	var atk_dir := get_attack_direction()
