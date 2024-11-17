@@ -2,10 +2,11 @@
 
 [ext_resource type="Texture2D" uid="uid://2w74kamy7xx4" path="res://plains.png" id="1_crmpd"]
 [ext_resource type="Texture2D" uid="uid://cahbcvpnkw45j" path="res://grass.png" id="2_4ecwe"]
-[ext_resource type="AudioStream" uid="uid://1l5u5w1wqaoj" path="res://audio/BackBeat.wav" id="3_73vn8"]
+[ext_resource type="AudioStream" uid="uid://cs0pgku3h15nq" path="res://audio/BackBeat.wav" id="3_73vn8"]
 [ext_resource type="Texture2D" uid="uid://cp5yv24bbwiu3" path="res://decor_8x8.png" id="3_adn2w"]
-[ext_resource type="Texture2D" uid="uid://b8c06ypmh6hip" path="res://water.png" id="4_4eiq2"]
-[ext_resource type="PackedScene" uid="uid://bx7t484rlusaw" path="res://player_guy.tscn" id="4_iy3ef"]
+[ext_resource type="Texture2D" uid="uid://c1yvwi63aj0jc" path="res://water.png" id="4_4eiq2"]
+[ext_resource type="PackedScene" uid="uid://bsdn71twxuejb" path="res://player_guy.tscn" id="4_iy3ef"]
+[ext_resource type="Script" path="res://player_cam.gd" id="7_aba51"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_385px"]
 texture = ExtResource("1_crmpd")
@@ -602,9 +603,6 @@ sources/1 = SubResource("TileSetAtlasSource_qumlv")
 sources/2 = SubResource("TileSetAtlasSource_81ges")
 sources/3 = SubResource("TileSetAtlasSource_jb8ve")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_p11ai"]
-size = Vector2(551, 160)
-
 [node name="Level1" type="Node2D"]
 texture_filter = 1
 
@@ -630,18 +628,13 @@ tile_set = SubResource("TileSet_5wksk")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_73vn8")
+autoplay = true
 
 [node name="PlayerGuy" parent="." instance=ExtResource("4_iy3ef")]
+position = Vector2(58, 56)
 
-position = Vector2(190, 185)
-
-[node name="Camera2D" type="Camera2D" parent="PlayerGuy"]
+[node name="PlayerCam" type="Camera2D" parent="PlayerGuy"]
 zoom = Vector2(3, 3)
 limit_left = 0
 limit_top = 0
-
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(265.5, 70)
-shape = SubResource("RectangleShape2D_p11ai")
+script = ExtResource("7_aba51")
