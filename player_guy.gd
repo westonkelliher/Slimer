@@ -33,7 +33,7 @@ func _physics_process(delta: float) -> void:
 func handle_slow_timer() -> void:
 	if $AtkSlowingTimer.time_left > 0.0:
 		var p: float = $AtkSlowingTimer.time_left / $AtkSlowingTimer.wait_time
-		speed = SPEED * (1 - 0.5*p)
+		speed = SPEED * (1 - 0.8*p)
 	else:
 		speed = SPEED
 
@@ -44,20 +44,15 @@ func apply_forces(delta: float) -> void:
 func handle_movement(delta: float) -> void:
 	var move_vec := get_move_vector()
 	var current_dir := velocity.normalized()
-	var acc := ACC
-	var speed := SPEED
-	#if is_attacking:
-		#acc *= 0.5
-		#speed *= 2.0
-	move_velocity = move_velocity.move_toward(move_vec*speed, acc*delta)
+	move_velocity = move_velocity.move_toward(move_vec*speed, ACC*delta)
 	choose_animation(move_vec)
 
 func handle_attack_movement(delta: float) -> void:
 	var move_vec := get_move_vector()
 	var current_dir := velocity.normalized()
 	var acc := ACC*0.25
-	var speed := SPEED*0.9
-	move_velocity = move_velocity.move_toward(move_vec*speed, acc*delta)
+	var spd := SPEED*0.9
+	move_velocity = move_velocity.move_toward(move_vec*spd, acc*delta)
 
 func check_for_attack_start() -> void:
 	var atk_dir := get_attack_direction()
@@ -73,16 +68,16 @@ func check_for_attack_start() -> void:
 				$Sprite.play("slashing_side")
 			AtkDir.UpLeft:
 				$Sprite.play("jab_up")
-				attack_velocity = Vector2(-1.0, -1.0)*SPEED*DASH_MULT
+				attack_velocity = Vector2(-1.0, -1.0)*speed*DASH_MULT
 			AtkDir.UpRight:
 				$Sprite.play("jab_up")
-				attack_velocity = Vector2(1.0, -1.0)*SPEED*DASH_MULT
+				attack_velocity = Vector2(1.0, -1.0)*speed*DASH_MULT
 			AtkDir.DownLeft:
 				$Sprite.play("jab_down")
-				attack_velocity = Vector2(-1.0, 1.0)*SPEED*DASH_MULT
+				attack_velocity = Vector2(-1.0, 1.0)*speed*DASH_MULT
 			AtkDir.DownRight:
 				$Sprite.play("jab_down")
-				attack_velocity = Vector2(1.0, 1.0)*SPEED*DASH_MULT
+				attack_velocity = Vector2(1.0, 1.0)*speed*DASH_MULT
 		#
 		if is_atk_dir_left(atk_dir):
 			$Sprite.scale.x = -SPRITE_SCALE
@@ -186,7 +181,8 @@ func choose_animation(direction: Vector2) -> void:
 
 func _on_sprite_animation_finished() -> void:
 	if is_attacking:
+		if move_disabled:
+			$AtkSlowingTimer.start()
 		is_attacking = false
 		move_disabled = false
 		attack_velocity = Vector2.ZERO
-		$AtkSlowingTimer.start()
