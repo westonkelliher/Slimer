@@ -3,7 +3,7 @@ extends CharacterBody2D
 @export var SPEED := 100.0
 @export var ACC := 700.0
 @export var SPRITE_SCALE := 1.0
-@export var DASH_MULT := 0.5
+@export var DASH_MULT := 1.5
 
 var move_velocity := Vector2.ZERO
 var attack_velocity := Vector2.ZERO 
@@ -15,10 +15,12 @@ enum AtkDir {Up, Down, Left, Right, UpLeft, UpRight, DownLeft, DownRight}
 enum State {Still, Straight, Diagonal, Windup, Swing, Recovery}
 var state := State.Still
 var is_attacking := false
+var move_disabled := false
 
 func _physics_process(delta: float) -> void:
 	if is_attacking:
-		handle_attack_movement(delta)
+		if !move_disabled:
+			handle_attack_movement(delta)
 	else:
 		handle_movement(delta)
 		check_for_attack_start()
@@ -78,7 +80,10 @@ func check_for_attack_start() -> void:
 		else:
 			$Sprite.scale.x = SPRITE_SCALE
 		#
-		if !is_atk_dir_diagonal(atk_dir):
+		if is_atk_dir_diagonal(atk_dir):
+			move_velocity = Vector2.ZERO
+			move_disabled = true
+		else:
 			move_velocity *= 0.6
 		#
 		is_attacking = true
@@ -173,4 +178,5 @@ func choose_animation(direction: Vector2) -> void:
 func _on_sprite_animation_finished() -> void:
 	if is_attacking:
 		is_attacking = false
+		move_disabled = false
 		attack_velocity = Vector2.ZERO

@@ -633,7 +633,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"jab_down",
-"speed": 8.0
+"speed": 20.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -650,7 +650,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"jab_up",
-"speed": 8.0
+"speed": 20.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -736,7 +736,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"slashing_down",
-"speed": 5.0
+"speed": 7.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -753,7 +753,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"slashing_side",
-"speed": 5.0
+"speed": 7.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -770,7 +770,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"slashing_up",
-"speed": 5.0
+"speed": 7.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -846,13 +846,14 @@ animations = [{
 radius = 7.07107
 
 [node name="PlayerGuy" type="CharacterBody2D"]
+motion_mode = 1
 script = ExtResource("1_k33vy")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 position = Vector2(0, -12)
 sprite_frames = SubResource("SpriteFrames_aoers")
-animation = &"resting_up"
+animation = &"walking_down"
 
 [node name="Shape" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_7bkkj")
